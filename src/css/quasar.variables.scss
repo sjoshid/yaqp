@@ -12,14 +12,46 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-$primary: #1976d2;
-$secondary: #26a69a;
-$accent: #9c27b0;
+:root {
+  --q-mynewcolor: #1900fe;
+}
 
-$dark: #1d1d1d;
-$dark-page: #121212;
+// for light
+.body--light {
+  --q-primary: #1976d2;
+  --q-secondary: #26a69a;
+  --q-accent: #9c27b0;
 
-$positive: #21ba45;
-$negative: #c10015;
-$info: #31ccec;
-$warning: #f2c037;
+  --q-dark: #1d1d1d;
+  --q-dark-page: #121212;
+
+  --q-positive: #21ba45;
+  --q-negative: #c10015;
+  --q-info: #31ccec;
+  --q-warning: #f2c037;
+}
+
+// for dark
+.body--dark {
+  --q-primary: #1976d2;
+  --q-secondary: #26a69a;
+  --q-accent: #2c396a;
+
+  --q-dark: #13212f;
+  --q-dark-page: #0a1822;
+
+  --q-positive: #3c5eda;
+  --q-negative: #69170f;
+  --q-info: #31ccec;
+  --q-warning: #f2c037;
+  --q-hover: #223243;
+  --q-active: rgb(44, 57, 106);
+}
+
+.text-mynewcolor {
+  color: var(--q-mynewcolor) !important;
+}
+
+.bg-mynewcolor {
+  background: var(--q-mynewcolor) !important;
+}
