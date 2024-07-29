@@ -3,8 +3,31 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    redirect: '/user',
+  },
+  {
+    path: '/user',
+    component: () => import('layouts/UserLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/HotspotPage.vue') },
+      { path: 'cache', component: () => import('pages/AlertsPage.vue') },
+      { path: 'metrics', component: () => import('pages/MetricsPage.vue') },
+      { path: 'api', component: () => import('pages/APIAccessPage.vue') },
+    ],
+  },
+  {
+    path: '/admin',
+    component: () => import('layouts/AdminLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/admin/Admin1Page.vue') },
+      { path: 'admin1', component: () => import('pages/admin/Admin1Page.vue') },
+      { path: 'admin2', component: () => import('pages/admin/Admin2Page.vue') },
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/AdminLayout.vue'),
+    children: [{ path: '', component: () => import('pages/LoginPage.vue') }],
   },
 
   // Always leave this as last one,

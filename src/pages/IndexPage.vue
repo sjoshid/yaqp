@@ -16,6 +16,9 @@ import ExampleComponent from 'components/ExampleComponent.vue';
 
 defineOptions({
   name: 'IndexPage',
+  preFetch() {
+    console.log('im prefetch in IndexPage.vue');
+  },
 });
 
 const todos = ref<Todo[]>([
