@@ -71,12 +71,12 @@ export default configure((/* ctx */) => {
           },
           { server: false },
         ],
+        ['@vitejs/plugin-basic-ssl'],
       ],
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
-      //https: true,
       open: false, // opens browser window automatically
     },
 
