@@ -86,7 +86,7 @@ const linksList = ref([
   {
     title: 'Metrics',
     icon: 'show_chart',
-    link: '#/user/metrics'
+    link: '#/user/metrics',
   },
   {
     title: 'Alerts',
@@ -98,11 +98,6 @@ const linksList = ref([
     caption: 'API details',
     icon: 'api',
     link: '#/user/api',
-  },
-  {
-    title: 'Settings',
-    icon: 'settings',
-    link: '#/user/settings',
   },
 ]);
 
