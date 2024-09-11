@@ -1,15 +1,13 @@
 <template>
   <q-page padding>
-    <GridLayout
+    <grid-layout
       v-bind:layout="layout"
-      :col-num="10"
       :row-height="50"
       is-draggable
       is-resizable
-      vertical-compact
       use-css-transforms
     >
-      <GridItem
+      <grid-item
         v-for="item in layout"
         :key="item.i"
         :x="item.x"
@@ -20,14 +18,35 @@
         @resize="handleResize"
         class="sharp-shadow"
       >
-        <highcharts :options="chartOptions"></highcharts>
-      </GridItem>
-    </GridLayout>
+        <v-chart class="chart" :option="chartOptions" autoresize />
+      </grid-item>
+    </grid-layout>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { GridItem, GridLayout } from 'grid-layout-plus';
+import { use } from 'echarts';
+import type { LineSeriesOption } from 'echarts/charts';
+import { LineChart } from 'echarts/charts';
+import type {
+  GridComponentOption,
+  LegendComponentOption,
+  TitleComponentOption,
+  ToolboxComponentOption,
+  TooltipComponentOption,
+} from 'echarts/components';
+import {
+  GridComponent,
+  LegendComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+} from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+import type { ComposeOption } from 'echarts/core';
+import VChart from 'vue-echarts';
+import { ECBasicOption } from 'echarts/types/dist/shared';
 
 const _props = defineProps<{
   layout: {
@@ -37,36 +56,27 @@ const _props = defineProps<{
     h: number;
     i: string;
   }[];
+  chartOptions: ECBasicOption;
 }>();
 
-onMounted(() => {
-  chartOptions.value = {
-    chart: {
-      type: 'line',
-    },
-    title: {
-      text: 'My Chart',
-    },
-    series: [
-      {
-        data: [1, 2, 3, 4, 5],
-      },
-    ],
-  };
-});
-const chartOptions = ref({
-  chart: {
-    type: 'line',
-  },
-  title: {
-    text: 'My Chart',
-  },
-  series: [
-    {
-      data: [1, 2, 3, 4, 5],
-    },
-  ],
-});
+use([
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  ToolboxComponent,
+  GridComponent,
+  LineChart,
+  CanvasRenderer,
+]);
+
+type EChartsOption = ComposeOption<
+  | TitleComponentOption
+  | TooltipComponentOption
+  | LegendComponentOption
+  | ToolboxComponentOption
+  | GridComponentOption
+  | LineSeriesOption
+>;
 
 const handleResize = () => {
   console.log('resized');

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
+import { provide, ref, watch } from 'vue';
 import { LocalStorage } from 'quasar';
+import { THEME_KEY } from 'vue-echarts';
 
 export const useThemeStore = defineStore('theme', () => {
   // init from localstorage
@@ -12,6 +13,8 @@ export const useThemeStore = defineStore('theme', () => {
 
   watch(isDark, (newValue, _oldValue) => {
     LocalStorage.set('oDark', newValue);
+    // this doesn't work!
+    provide(THEME_KEY, newValue ? 'dark' : 'vintage');
   });
   return { isDark };
 });
