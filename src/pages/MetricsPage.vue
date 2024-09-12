@@ -22,20 +22,22 @@
         />
       </div>
     </div>
-    <GridComponent :layout="layout" :chart-options="options" />
+    <div class="q-pa-lg">
+      <q-option-group
+        v-model="activeLayout"
+        :options="gridOptions"
+        color="accent"
+        inline
+      />
+    </div>
+    <GridComponent :layout="activeLayout" :chart-options="options" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue';
+import { ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
 import DateRangeComponent from 'components/DateRangeComponent.vue';
-import { THEME_KEY } from 'vue-echarts';
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from 'stores/theme.ts';
-
-const theme = useThemeStore();
-const { isDark } = storeToRefs(theme);
 
 defineOptions({
   name: 'MetricsPage',
@@ -47,11 +49,55 @@ defineOptions({
 const startDate = ref('2024-09-04 10:00');
 const endDate = ref('2024-09-04 10:00');
 
-const layout = [
-  { x: 0, y: 0, w: 10, h: 5, i: '0' },
-  { x: 0, y: 5, w: 10, h: 5, i: '1' },
-  { x: 0, y: 15, w: 10, h: 5, i: '2' },
-  { x: 0, y: 20, w: 10, h: 5, i: '3' },
+const routerLayout = [
+  { x: 0, y: 0, w: 12, h: 5, i: '0' },
+
+  { x: 0, y: 5, w: 5, h: 5, i: '1' },
+  { x: 5, y: 5, w: 5, h: 5, i: '2' },
+  { x: 10, y: 5, w: 2, h: 5, i: '3' },
+
+  { x: 0, y: 15, w: 10, h: 5, i: '4' },
+  { x: 10, y: 15, w: 2, h: 5, i: '5' },
+
+  { x: 0, y: 20, w: 5, h: 5, i: '7' },
+  { x: 5, y: 20, w: 5, h: 5, i: '8' },
+  { x: 10, y: 20, w: 2, h: 5, i: '9' },
+];
+
+const bbsLayout = [
+  { x: 0, y: 0, w: 12, h: 5, i: '0' },
+  { x: 0, y: 5, w: 12, h: 5, i: '1' },
+  { x: 0, y: 15, w: 12, h: 5, i: '2' },
+  { x: 0, y: 20, w: 12, h: 5, i: '3' },
+];
+
+const chLayout = [
+  { x: 0, y: 0, w: 12, h: 7, i: '0' },
+
+  { x: 0, y: 7, w: 5, h: 7, i: '1' },
+  { x: 5, y: 7, w: 5, h: 7, i: '2' },
+  { x: 10, y: 7, w: 2, h: 7, i: '3' },
+];
+
+const activeLayout = ref(routerLayout);
+const intfLayout = [...routerLayout];
+const gridOptions = [
+  {
+    label: 'Router Grid Layout',
+    value: routerLayout,
+  },
+  {
+    label: 'BBS Grid Layout',
+    value: bbsLayout,
+  },
+  {
+    label: 'Intf. Grid Layout',
+    value: intfLayout,
+  },
+  {
+    label: 'CloudHub Grid Layout',
+    value: chLayout,
+  },
 ];
 
 const updateDashboard = (startDate: string, endDate: string) => {
