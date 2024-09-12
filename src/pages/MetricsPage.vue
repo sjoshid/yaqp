@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
 import DateRangeComponent from 'components/DateRangeComponent.vue';
 
@@ -119,9 +119,9 @@ const options = computed(() => {
     },
     grid: {
       left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
+      right: '4%',
+      bottom: '3%',
+      containLabel: true,
     },
     toolbox: {
       feature: {
@@ -130,8 +130,8 @@ const options = computed(() => {
     },
     xAxis: {
       type: 'category',
-        boundaryGap: false,
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      boundaryGap: false,
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     },
     yAxis: {
       type: 'value',
@@ -168,6 +168,6 @@ const options = computed(() => {
         data: [820, 932, 901, 934, 1290, 1330, 1320],
       },
     ],
-  }
+  };
 });
 </script>
