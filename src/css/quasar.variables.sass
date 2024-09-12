@@ -12,11 +12,9 @@
 // to match your app's branding.
 // Tip: Use the "Theme Builder" on Quasar's documentation website.
 
-  :root
-    --q-mynewcolor: #1900fe
+$q-mynewcolor: #fe0000
+$o-shadow: 3px 3px 0 0
 
-
-// for light
 .body--light
   --q-primary: #1976d2
   --q-secondary: #26a69a
@@ -26,13 +24,13 @@
   --q-negative: #c10015
   --q-info: #31ccec
   --q-warning: #f2c037
+  --o-grid-shadow: #361E1EFF #{$o-shadow}
+  --o-dashboard-bg-color: #cccccc
 
-
-// for dark
 .body--dark
   --q-primary: #1976d2
   --q-secondary: #26a69a
-  --q-accent: rgb(44, 57, 106)
+  --q-accent: #2C396AFF
 
   --q-dark: #13212f
   --q-dark-page: #0a1822
@@ -42,14 +40,15 @@
   --q-info: #31ccec
   --q-warning: #f2c037
   --q-hover: #223243
-//--q-active: rgb(44, 57, 106)
+  --o-grid-shadow: #88A5BF7A #{$o-shadow}
+  --o-dashboard-bg-color: #153348
 
 
 .text-mynewcolor
-  color: var(--q-mynewcolor) !important
+  color: #{$q-mynewcolor} !important
 
 
 .bg-mynewcolor
-  background: var(--q-mynewcolor) !important
+  background: #{$q-mynewcolor} !important
 
 

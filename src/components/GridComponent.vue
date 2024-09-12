@@ -2,7 +2,8 @@
   <q-page padding>
     <grid-layout
       v-bind:layout="layout"
-      :row-height="50"
+      :col-num="12"
+      :row-height="60"
       is-draggable
       is-resizable
       use-css-transforms
@@ -83,12 +84,13 @@ const handleResize = () => {
 };
 </script>
 
-<style scoped>
-.vgl-item {
-  background-color: #886464;
-}
+<style scoped lang="sass">
+.vgl-layout
+  background-color: var(--o-dashboard-bg-color)
 
-body.body--dark .sharp-shadow {
-  box-shadow: rgba(136, 165, 191, 0.48) 3px 3px 0 0;
-}
+.vgl-item
+  background-color: #886464
+
+.sharp-shadow
+  box-shadow: var(--o-grid-shadow)
 </style>
