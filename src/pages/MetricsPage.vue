@@ -22,7 +22,7 @@
         />
       </div>
     </div>
-    <div class="q-pa-lg">
+    <div class="q-pa-md">
       <q-option-group
         v-model="activeLayout"
         :options="gridOptions"
@@ -30,6 +30,14 @@
         inline
       />
     </div>
+    <q-form @submit="onSubmit" class="row">
+      <div class="q-ma-xs col-1 content-center">
+        <q-input filled v-model="activeRouterId" label="Router id" dense />
+      </div>
+      <div class="q-ma-xs col-1 content-center">
+        <q-btn label="Submit" type="submit" color="primary" />
+      </div>
+    </q-form>
     <GridComponent :layout="activeLayout" :chart-options="options" />
   </div>
 </template>
@@ -38,6 +46,7 @@
 import { computed, ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
 import DateRangeComponent from 'components/DateRangeComponent.vue';
+import { inOutSeriesTemplate, useInOutMetricsBapi } from '../composable/metrics.ts';
 
 defineOptions({
   name: 'MetricsPage',
@@ -106,16 +115,17 @@ const updateDashboard = (sd: string, ed: string) => {
   endDate.value = ed;
 };
 
+const onSubmit = () => {
+  useInOutMetricsBapi(activeRouterId)
+};
+
 const options = computed(() => {
   return {
-    title: {
-      text: startDate.value + ' --  ' + endDate.value,
-    },
     tooltip: {
       trigger: 'axis',
     },
     legend: {
-      data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine'],
+      data: ['Max In', 'Max Out', 'Avg In', 'Avg Out'],
     },
     grid: {
       left: '3%',
@@ -131,43 +141,13 @@ const options = computed(() => {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     },
     yAxis: {
       type: 'value',
     },
-    series: [
-      {
-        name: 'Email',
-        type: 'line',
-        stack: 'Total',
-        data: [120, 132, 101, 134, 90, 230, 210],
-      },
-      {
-        name: 'Union Ads',
-        type: 'line',
-        stack: 'Total',
-        data: [220, 182, 191, 234, 290, 330, 310],
-      },
-      {
-        name: 'Video Ads',
-        type: 'line',
-        stack: 'Total',
-        data: [150, 232, 201, 154, 190, 330, 410],
-      },
-      {
-        name: 'Direct',
-        type: 'line',
-        stack: 'Total',
-        data: [320, 332, 301, 334, 390, 330, 320],
-      },
-      {
-        name: 'Search Engine',
-        type: 'line',
-        stack: 'Total',
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-      },
-    ],
+    series: inOutSeriesTemplate,
   };
 });
+
+const activeRouterId = ref('');
 </script>
