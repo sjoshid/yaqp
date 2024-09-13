@@ -1,20 +1,12 @@
 import { bapi } from '../boot/axios.ts';
-import { reactive, ref, ToRef, toValue } from 'vue';
-
-const inOutURL = '/metrics/inout';
+import { reactive, ToRef, toValue } from 'vue';
+import { ECBasicOption } from 'echarts/types/dist/shared';
 
 type InOutSeries = {
   name: string;
   type: string;
   stack: string;
   data: number[];
-};
-
-type Main = {
-  maxIn: InOutSeries;
-  maxOut: InOutSeries;
-  avgIn: InOutSeries;
-  avgOut: InOutSeries;
 };
 
 type InOutResponse = {
@@ -51,9 +43,12 @@ export const inOutSeriesTemplate: InOutSeries[] = reactive([
   },
 ]);
 
-export const useInOutMetricsBapi = (routerId: string | ToRef<string>) => {
+export const useInOutMetricsBapi = (
+  url: string,
+  routerId: string | ToRef<string>,
+) => {
   bapi
-    .get<InOutResponse>(inOutURL, {
+    .get<InOutResponse>(url, {
       params: { routerID: toValue(routerId) },
     })
     .then(({ data }) => {
@@ -68,4 +63,7 @@ export const useInOutMetricsBapi = (routerId: string | ToRef<string>) => {
     });
 };
 
-export default { useInOutMetricsBapi, inOutSeriesTemplate };
+export type TSDetails = {
+  url: string;
+  options: ECBasicOption;
+};

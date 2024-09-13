@@ -19,7 +19,7 @@
         @resize="handleResize"
         class="sharp-shadow"
       >
-        <v-chart class="chart" :option="chartOptions" autoresize />
+        <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" />
       </grid-item>
     </grid-layout>
   </q-page>
@@ -27,29 +27,10 @@
 
 <script setup lang="ts">
 import { GridItem, GridLayout } from 'grid-layout-plus';
-import { use } from 'echarts';
-import type { LineSeriesOption } from 'echarts/charts';
-import { LineChart } from 'echarts/charts';
-import type {
-  GridComponentOption,
-  LegendComponentOption,
-  TitleComponentOption,
-  ToolboxComponentOption,
-  TooltipComponentOption,
-} from 'echarts/components';
-import {
-  GridComponent,
-  LegendComponent,
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import type { ComposeOption } from 'echarts/core';
-import VChart from 'vue-echarts';
-import { ECBasicOption } from 'echarts/types/dist/shared';
+import OTSChartComponent from 'components/OTSChartComponent.vue';
 
 const _props = defineProps<{
+  id: string; //router id, intf. id, etc.
   layout: {
     x: number;
     y: number;
@@ -57,27 +38,9 @@ const _props = defineProps<{
     h: number;
     i: string;
   }[];
-  chartOptions: ECBasicOption;
+  startDate: string;
+  endDate: string;
 }>();
-
-use([
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  ToolboxComponent,
-  GridComponent,
-  LineChart,
-  CanvasRenderer,
-]);
-
-type EChartsOption = ComposeOption<
-  | TitleComponentOption
-  | TooltipComponentOption
-  | LegendComponentOption
-  | ToolboxComponentOption
-  | GridComponentOption
-  | LineSeriesOption
->;
 
 const handleResize = () => {
   console.log('resized');

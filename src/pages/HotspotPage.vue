@@ -3,12 +3,10 @@
     <div class="q-px-md text-h4 text-indigo">
       Hotspot Page for range (startDate) to (endDate)
     </div>
-    <GridComponent :layout="layout" :chart-options="options" />
   </div>
 </template>
 
 <script setup lang="ts">
-import GridComponent from 'components/GridComponent.vue';
 
 defineOptions({
   name: 'HotspotPage',

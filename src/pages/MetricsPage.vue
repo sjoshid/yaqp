@@ -18,7 +18,7 @@
         <DateRangeComponent
           :sdate="startDate"
           :edate="endDate"
-          @apply-range="updateDashboard"
+          @apply-range="changeTimeRange"
         />
       </div>
     </div>
@@ -30,23 +30,22 @@
         inline
       />
     </div>
-    <q-form @submit="onSubmit" class="row">
+    <q-form @submit="changeId" class="row">
       <div class="q-ma-xs col-1 content-center">
-        <q-input filled v-model="activeRouterId" label="Router id" dense />
+        <q-input filled v-model="inputId" label="Router id" dense />
       </div>
       <div class="q-ma-xs col-1 content-center">
         <q-btn label="Submit" type="submit" color="primary" />
       </div>
     </q-form>
-    <GridComponent :layout="activeLayout" :chart-options="options" />
+    <GridComponent v-if="activeLayout.length > 0" :id="activeId" :startDate :endDate :layout="activeLayout" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
 import DateRangeComponent from 'components/DateRangeComponent.vue';
-import { inOutSeriesTemplate, useInOutMetricsBapi } from '../composable/metrics.ts';
 
 defineOptions({
   name: 'MetricsPage',
@@ -59,18 +58,18 @@ const startDate = ref('2024-09-04 10:00');
 const endDate = ref('2024-09-04 10:00');
 
 const routerLayout = [
-  { x: 0, y: 0, w: 12, h: 5, i: '0' },
+  { x: 0, y: 0, w: 12, h: 5, i: 'routerInOut' },
 
-  { x: 0, y: 5, w: 5, h: 5, i: '1' },
-  { x: 5, y: 5, w: 5, h: 5, i: '2' },
-  { x: 10, y: 5, w: 2, h: 5, i: '3' },
+  /*{ x: 0, y: 5, w: 5, h: 5, i: 'routerUptime' },
+  { x: 5, y: 5, w: 5, h: 5, i: 'routerSaturation' },
+  { x: 10, y: 5, w: 2, h: 5, i: 'routerGaugeCurrentUptime' },
 
-  { x: 0, y: 15, w: 10, h: 5, i: '4' },
-  { x: 10, y: 15, w: 2, h: 5, i: '5' },
+  { x: 0, y: 15, w: 10, h: 5, i: 'routerMemUsed' },
+  { x: 10, y: 15, w: 2, h: 5, i: 'routerMemUsed' },
 
-  { x: 0, y: 20, w: 5, h: 5, i: '7' },
-  { x: 5, y: 20, w: 5, h: 5, i: '8' },
-  { x: 10, y: 20, w: 2, h: 5, i: '9' },
+  { x: 0, y: 20, w: 5, h: 5, i: 'routerCPULoad' },
+  { x: 5, y: 20, w: 5, h: 5, i: 'routerCPULoad' },
+  { x: 10, y: 20, w: 2, h: 5, i: 'routerGaugeCurrentMemUtil' },*/
 ];
 
 const bbsLayout = [
@@ -88,7 +87,7 @@ const chLayout = [
   { x: 10, y: 7, w: 2, h: 7, i: '3' },
 ];
 
-const activeLayout = ref(routerLayout);
+const activeLayout = ref([]);
 const intfLayout = [...routerLayout];
 const gridOptions = [
   {
@@ -109,45 +108,16 @@ const gridOptions = [
   },
 ];
 
-const updateDashboard = (sd: string, ed: string) => {
+const changeTimeRange = (sd: string, ed: string) => {
   console.log('start date is', sd, 'end date is', ed);
   startDate.value = sd;
   endDate.value = ed;
 };
 
-const onSubmit = () => {
-  useInOutMetricsBapi(activeRouterId)
+const changeId = () => {
+  activeLayout.value = routerLayout;
+  activeId.value = inputId.value;
 };
-
-const options = computed(() => {
-  return {
-    tooltip: {
-      trigger: 'axis',
-    },
-    legend: {
-      data: ['Max In', 'Max Out', 'Avg In', 'Avg Out'],
-    },
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-    },
-    yAxis: {
-      type: 'value',
-    },
-    series: inOutSeriesTemplate,
-  };
-});
-
-const activeRouterId = ref('');
+const activeId = ref('');
+const inputId = ref('');
 </script>
