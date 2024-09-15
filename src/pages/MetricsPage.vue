@@ -1,25 +1,25 @@
 <template>
   <div class="q-pa-md column">
-    <div class="row justify-between">
-      <div class="col-3 content-center">
+    <div class="row items-center">
+      <div class="col-3">
         <div class="q-px-md text-h4 text-indigo">Metrics Page for jpg-004</div>
       </div>
-      <div class="col content-center">
-        <div class="row justify-end">
-          <q-btn class="q-mx-xs" icon="picture_as_pdf">
-            <q-tooltip> Generate dashboard as PDF</q-tooltip>
-          </q-btn>
-          <q-btn class="q-mx-xs" icon="pause">
-            <q-tooltip> Pause dashboard auto-refresh</q-tooltip>
-          </q-btn>
+      <div class="col-9">
+        <div class="col-10 row justify-end">
+          <div class="row justify-end q-ma-md">
+            <q-btn class="q-px-md" icon="picture_as_pdf">
+              <q-tooltip>Generate dashboard as PDF</q-tooltip>
+            </q-btn>
+            <q-btn class="q-mx-xs" icon="pause">
+              <q-tooltip>Pause dashboard auto-refresh</q-tooltip>
+            </q-btn>
+          </div>
+          <DateRangeComponent
+            :sdate="startDate"
+            :edate="endDate"
+            @apply-range="changeTimeRange"
+          />
         </div>
-      </div>
-      <div class="col-6">
-        <DateRangeComponent
-          :sdate="startDate"
-          :edate="endDate"
-          @apply-range="changeTimeRange"
-        />
       </div>
     </div>
     <div class="q-pa-md">
@@ -38,7 +38,13 @@
         <q-btn label="Submit" type="submit" color="primary" />
       </div>
     </q-form>
-    <GridComponent v-if="activeLayout.length > 0" :id="activeId" :startDate :endDate :layout="activeLayout" />
+    <GridComponent
+      v-if="activeLayout.length > 0"
+      :id="activeId"
+      :startDate
+      :endDate
+      :layout="activeLayout"
+    />
   </div>
 </template>
 
