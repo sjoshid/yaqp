@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia';
-import { ECBasicOption } from 'echarts/types/dist/shared';
 import { ref } from 'vue';
-
-export type TSDetails = {
-  url: string;
-  options: ECBasicOption;
-};
+import { InOutResponse, TSDetails } from 'src/composable/metrics.ts';
 
 export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
-  const routerInOut: TSDetails = {
+  const routerInOut: TSDetails<InOutResponse[], InOutResponse[]> = {
     url: '/metrics/inout',
+    cb: (res) => {
+      console.log(typeof res);
+      return res;
+    },
     options: {
       tooltip: {
         trigger: 'axis',
       },
-      legend: {
+      // Legend array will be series[0].name
+      /*legend: {
         data: ['Max In', 'Max Out', 'Avg In', 'Avg Out'],
-      },
+      },*/
       grid: {
         left: '3%',
         right: '4%',
@@ -29,38 +29,14 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
         },
       },
       xAxis: {
-        type: 'category',
-        boundaryGap: false,
+        type: 'time',
       },
       yAxis: {
         type: 'value',
       },
-      series: [
-        {
-          name: 'Max In',
-          type: 'line',
-          stack: 'Total',
-          data: [],
-        },
-        {
-          name: 'Max Out',
-          type: 'line',
-          stack: 'Total',
-          data: [],
-        },
-        {
-          name: 'Avg In',
-          type: 'line',
-          stack: 'Total',
-          data: [],
-        },
-        {
-          name: 'Avg Out',
-          type: 'line',
-          stack: 'Total',
-          data: [],
-        },
-      ],
+      // sj_todo Why dont we just return the entire series array from API call?
+      // So we dont have to "join"
+      series: [],
     },
   };
   const routerUptime: TSDetails = {

@@ -17,7 +17,6 @@
         :h="item.h"
         :i="item.i"
         @resize="handleResize"
-        class="sharp-shadow"
       >
         <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" />
       </grid-item>

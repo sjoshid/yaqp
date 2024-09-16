@@ -14,19 +14,9 @@
 </template>
 
 <script setup lang="ts">
-defineOptions({
-  name: 'EssentialLink',
-});
+import { OLinkProps } from 'src/composable/metrics.ts';
 
-export interface EssentialLinkProps {
-  title: string;
-  caption?: string;
-  link?: string;
-  icon?: string;
-  active?: boolean;
-}
-
-withDefaults(defineProps<EssentialLinkProps>(), {
+withDefaults(defineProps<OLinkProps>(), {
   caption: '',
   link: '#',
   icon: '',
@@ -34,8 +24,7 @@ withDefaults(defineProps<EssentialLinkProps>(), {
 });
 </script>
 
-<style lang="scss">
-.bg-cust {
-  background-color: var(--q-accent);
-}
+<style scoped lang="sass">
+.bg-cust
+  background-color: var(--q-accent)
 </style>

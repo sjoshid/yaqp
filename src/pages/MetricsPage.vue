@@ -1,57 +1,72 @@
 <template>
-  <div class="q-pa-md column">
-    <div class="row items-center">
-      <div class="col-3">
-        <div class="q-px-md text-h4 text-indigo">Metrics Page for jpg-004</div>
-      </div>
-      <div class="col-9">
-        <div class="col-10 row justify-end">
-          <div class="row justify-end q-ma-md">
-            <q-btn class="q-px-md" icon="picture_as_pdf">
+  <q-page padding>
+    <div class="q-pa-xl column">
+      <div class="row">
+        <div class="col-3">
+          <div class="q-px-md text-h4 text-indigo">
+            Metrics Page for jpg-004
+          </div>
+        </div>
+        <div class="col-9">
+          <div class="row justify-end">
+            <q-btn flat class="q-mx-xs" icon="picture_as_pdf" size="sm">
               <q-tooltip>Generate dashboard as PDF</q-tooltip>
             </q-btn>
-            <q-btn class="q-mx-xs" icon="pause">
+            <q-btn
+              flat
+              class="q-mx-xs"
+              :icon="pausePlayIcon"
+              @click="togglePausePlayIcon"
+              size="sm"
+            >
               <q-tooltip>Pause dashboard auto-refresh</q-tooltip>
             </q-btn>
+            <ODateTimePickerComponent
+              :customRangeDialog
+              @discard="customRangeDialog = false"
+            />
+            <q-select
+              class="q-ml-md col-2"
+              style="max-width: 150px"
+              :model-value="selectedPreset.label"
+              :options="availablePresets"
+              dense
+              filled
+              :label="props.label"
+              @update:model-value="
+                (nv) => {
+                  if (nv.value !== 'custom') {
+                    selectedPreset = nv;
+                  } else {
+                    customRangeDialog = true;
+                  }
+                }
+              "
+            />
           </div>
-          <DateRangeComponent
-            :sdate="startDate"
-            :edate="endDate"
-            @apply-range="changeTimeRange"
-          />
         </div>
       </div>
-    </div>
-    <div class="q-pa-md">
-      <q-option-group
-        v-model="activeLayout"
-        :options="gridOptions"
-        color="accent"
-        inline
+      <GridComponent
+        v-if="activeLayout.length > 0"
+        :id="activeId"
+        :startDate
+        :endDate
+        :layout="activeLayout"
       />
     </div>
-    <q-form @submit="changeId" class="row">
-      <div class="q-ma-xs col-1 content-center">
-        <q-input filled v-model="inputId" label="Router id" dense />
-      </div>
-      <div class="q-ma-xs col-1 content-center">
-        <q-btn label="Submit" type="submit" color="primary" />
-      </div>
-    </q-form>
-    <GridComponent
-      v-if="activeLayout.length > 0"
-      :id="activeId"
-      :startDate
-      :endDate
-      :layout="activeLayout"
-    />
-  </div>
+  </q-page>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
-import DateRangeComponent from 'components/DateRangeComponent.vue';
+import ODateTimePickerComponent from 'components/ODateTimePickerComponent.vue';
+import {
+  availablePresets,
+  nowUTC,
+  selectedPreset,
+} from 'src/composable/UTCZonedDateTime.ts';
+import { PresetDetails } from 'src/composable/metrics.ts';
 
 defineOptions({
   name: 'MetricsPage',
@@ -59,6 +74,17 @@ defineOptions({
     console.log('im prefetch in MetricsPage.vue');
   },
 });
+
+const props = withDefaults(
+  defineProps<{
+    label?: string;
+    showCustomPreset?: boolean;
+  }>(),
+  {
+    label: 'Presets',
+    showCustomPreset: true,
+  },
+);
 
 const startDate = ref('2024-09-04 10:00');
 const endDate = ref('2024-09-04 10:00');
@@ -115,7 +141,6 @@ const gridOptions = [
 ];
 
 const changeTimeRange = (sd: string, ed: string) => {
-  console.log('start date is', sd, 'end date is', ed);
   startDate.value = sd;
   endDate.value = ed;
 };
@@ -126,4 +151,41 @@ const changeId = () => {
 };
 const activeId = ref('');
 const inputId = ref('');
+
+const customRangeDialog = ref(false);
+const isPaused = ref(false);
+const pausePlayIcon = ref('pause');
+
+const togglePausePlayIcon = () => {
+  if (isPaused.value) {
+    pausePlayIcon.value = 'pause';
+  } else {
+    pausePlayIcon.value = 'play_arrow';
+  }
+  isPaused.value = !isPaused.value;
+};
+
+onBeforeMount(() => {
+  if (props.showCustomPreset) {
+    availablePresets.push({
+      label: 'Custom',
+      value: 'custom',
+      period: (): PresetDetails => {
+        // This preset is invalid
+        return {
+          startDateTime: nowUTC(),
+          endDateTime: nowUTC(),
+          available: [],
+        };
+      },
+      fluid: false,
+    });
+  }
+});
+
+onBeforeUnmount(() => {
+  if (props.showCustomPreset) {
+    availablePresets.pop();
+  }
+});
 </script>

@@ -10,18 +10,34 @@ const routes: RouteRecordRaw[] = [
     component: () => import('layouts/UserLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HotspotPage.vue') },
-      { path: 'cache', component: () => import('pages/AlertsPage.vue') },
       { path: 'metrics', component: () => import('pages/MetricsPage.vue') },
       { path: 'api', component: () => import('pages/APIAccessPage.vue') },
+      { path: 'inventory', component: () => import('pages/InventoryPage.vue') },
+      {
+        path: 'settings',
+        component: () => import('pages/UserSettingsPage.vue'),
+      },
     ],
   },
   {
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/admin/Admin1Page.vue') },
-      { path: 'admin1', component: () => import('pages/admin/Admin1Page.vue') },
-      { path: 'admin2', component: () => import('pages/admin/Admin2Page.vue') },
+      { path: '', component: () => import('pages/admin/users/ListUsersPage.vue') },
+      {
+        path: 'users',
+        component: () => import('pages/admin/users/ListUsersPage.vue'),
+      },
+      {
+        path: 'users/create',
+        component: () => import('pages/admin/users/CreateUserPage.vue'),
+      },
+      {
+        path: 'company',
+        component: () => import('pages/admin/company/ViewCompanyPage.vue'),
+      },
+      { path: 'groups', component: () => import('pages/admin/groups/ListGroupsPage.vue') },
+      { path: 'alerts', component: () => import('pages/admin/alerts/ListAlertsPage.vue') },
     ],
   },
   {

@@ -1,91 +1,61 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Quasar App</q-toolbar-title>
-        <q-toggle
-          v-model="isDark"
-          color="positive"
-          checked-icon="dark_mode"
-          unchecked-icon="light_mode"
-          @click="$q.dark.toggle()"
-        />
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      :mini="miniState"
-      @mouseover="miniState = false"
-      @mouseout="miniState = true"
-      mini-to-overlay
-    >
-      <q-list>
-        <q-item-label header> Essential Links</q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
-      Dark theme?: {{ isDark }}
-      <router-view />
+      <q-page padding>
+        <OHeaderComponent />
+        <ODrawerComponent />
+
+        <q-tabs
+          v-model="panel"
+          dense
+          class="text-grey"
+          active-bg-color="accent"
+          indicator-color="primary"
+          align="justify"
+          narrow-indicator
+        >
+          <q-route-tab name="users" label="Users" to="/admin/users" exact />
+          <q-route-tab
+            name="company"
+            label="Company"
+            to="/admin/company"
+            exact
+          />
+          <q-route-tab name="groups" label="Groups" to="/admin/groups" exact />
+          <q-route-tab name="alerts" label="Alerts" to="/admin/alerts" exact />
+        </q-tabs>
+
+        <q-page-container>
+          <div class="row">
+            <div class="col-11">
+              <router-view />
+            </div>
+          </div>
+        </q-page-container>
+
+        <q-page-sticky position="bottom-right" :offset="[50, 50]">
+          <q-fab
+            v-model="fab1"
+            color="secondary"
+            icon="add"
+            direction="up"
+          >
+            <q-fab-action color="primary" icon="person_add" to="/admin/users/create" />
+            <q-fab-action color="accent" icon="add_business" />
+            <q-fab-action color="secondary" icon="group_add" />
+            <q-fab-action color="orange" icon="add_alert" />
+          </q-fab>
+        </q-page-sticky>
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script setup lang="ts">
+import OHeaderComponent from 'components/OHeaderComponent.vue';
+import ODrawerComponent from 'components/ODrawerComponent.vue';
 import { ref } from 'vue';
-import { useQuasar } from 'quasar';
-import { storeToRefs } from 'pinia';
-import { useThemeStore } from 'stores/theme';
 
-import EssentialLink, {
-  EssentialLinkProps,
-} from 'components/EssentialLink.vue';
-
-const theme = useThemeStore();
-const $q = useQuasar();
-const { isDark } = storeToRefs(theme);
-
-defineOptions({
-  name: 'AdminLayout',
-});
-
-const linksList: EssentialLinkProps[] = [
-  {
-    title: 'Admin page 1',
-    caption: '1',
-    icon: 'favorite',
-    link: '#/admin/admin1',
-  },
-  {
-    title: 'Admin page 2',
-    caption: '2',
-    icon: 'favorite',
-    link: '#/admin/admin2',
-  },
-];
-
-const leftDrawerOpen = ref(false);
-const miniState = ref(true);
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+const panel = ref('users');
+const fab1 = ref(false);
 </script>

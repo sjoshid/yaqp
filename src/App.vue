@@ -28,3 +28,11 @@ defineOptions({
 
 $q.dark.set(isDark.value);
 </script>
+
+<style lang="sass">
+.q-focus-helper
+  color: var(--q-accent)
+
+.q-field--standout.q-field--dark .q-field__control
+  background: var(--o-field-highlight)
+</style>
