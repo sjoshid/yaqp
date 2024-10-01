@@ -4,6 +4,7 @@ import { ECBasicOption } from 'echarts/types/dist/shared';
 import { ZonedDateTime } from '@js-joda/core';
 
 export interface OLinkProps {
+  name: string;
   title: string;
   caption?: string;
   link?: string;

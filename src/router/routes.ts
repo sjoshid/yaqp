@@ -23,7 +23,10 @@ const routes: RouteRecordRaw[] = [
     path: '/admin',
     component: () => import('layouts/AdminLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/admin/users/ListUsersPage.vue') },
+      {
+        path: '',
+        component: () => import('pages/admin/users/ListUsersPage.vue'),
+      },
       {
         path: 'users',
         component: () => import('pages/admin/users/ListUsersPage.vue'),
@@ -36,8 +39,14 @@ const routes: RouteRecordRaw[] = [
         path: 'company',
         component: () => import('pages/admin/company/ViewCompanyPage.vue'),
       },
-      { path: 'groups', component: () => import('pages/admin/groups/ListGroupsPage.vue') },
-      { path: 'alerts', component: () => import('pages/admin/alerts/ListAlertsPage.vue') },
+      {
+        path: 'groups',
+        component: () => import('pages/admin/groups/ListGroupsPage.vue'),
+      },
+      {
+        path: 'alerts',
+        component: () => import('pages/admin/alerts/ListAlertsPage.vue'),
+      },
     ],
   },
   {

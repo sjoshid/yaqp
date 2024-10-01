@@ -16,8 +16,8 @@
               stack-label
               v-model="formState.name"
               :rules="[
-                  (val) => (val && val.length > 0) || 'Name must be filled in.',
-                ]"
+                (val) => (val && val.length > 0) || 'Name must be filled in.',
+              ]"
               color="secondary"
               lazy-rules="ondemand"
               clearable
@@ -30,9 +30,7 @@
               label="Username"
               stack-label
               v-model="formState.email"
-              :rules="[
-                  (val) => validateEmail(val) || 'Must be a valid email.',
-                ]"
+              :rules="[(val) => validateEmail(val) || 'Must be a valid email.']"
               lazy-rules="ondemand"
               clearable
               color="secondary"
@@ -52,9 +50,9 @@
               v-model="formState.password.value"
               type="password"
               :rules="[
-                  (val) =>
-                    validatePassword(val) || 'Password must meet all criteria.',
-                ]"
+                (val) =>
+                  validatePassword(val) || 'Password must meet all criteria.',
+              ]"
             >
             </q-input>
             <div class="password-criteria q-pa-sm">
@@ -94,10 +92,10 @@
               :disable="!validatePassword(formState.password.value)"
               type="password"
               :rules="[
-                  (val) =>
-                    (val && val === formState.password.value) ||
-                    'Must match password.',
-                ]"
+                (val) =>
+                  (val && val === formState.password.value) ||
+                  'Must match password.',
+              ]"
             >
             </q-input>
           </q-card-section>
@@ -119,9 +117,8 @@
               <q-toolbar shrink class="bg-primary">
                 <q-toolbar-title shrink>Groups</q-toolbar-title>
               </q-toolbar>
-              <q-scroll-area style="height: 200px;">
+              <q-scroll-area style="height: 200px">
                 <q-list>
-
                   <q-item tag="label" v-ripple>
                     <q-item-section avatar>
                       <q-checkbox v-model="group" val="teal" />
@@ -278,11 +275,10 @@ const roleOptions = ['System Admin', 'Company Admin', 'Company User'];
 const additionalPerms = ref([]);
 
 onMounted(() => {
-  console.log('usersingup page mounted')
-})
-
+  console.log('usersingup page mounted');
+});
 
 onUnmounted(() => {
-  console.log('usersingup page onUnmounted')
-})
+  console.log('usersingup page onUnmounted');
+});
 </script>

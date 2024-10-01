@@ -1,13 +1,13 @@
 <template>
   <q-page padding>
-      <q-table
-        class="sharp-shadow"
-        flat
-        title="BBS/LVC"
-        :rows="rows"
-        :columns="columns"
-        row-key="name"
-      />
+    <q-table
+      class="sharp-shadow"
+      flat
+      title="BBS/LVC"
+      :rows="rows"
+      :columns="columns"
+      row-key="name"
+    />
   </q-page>
 </template>
 
