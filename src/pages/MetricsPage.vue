@@ -9,18 +9,18 @@
         </div>
         <div class="col-9">
           <div class="row justify-end">
-            <q-btn flat class="q-mx-xs" icon="picture_as_pdf" size="sm">
+            <o-btn :dense='false' class="q-mx-xs" icon="picture_as_pdf" size="sm">
               <q-tooltip>Generate dashboard as PDF</q-tooltip>
-            </q-btn>
-            <q-btn
-              flat
+            </o-btn>
+            <o-btn
               class="q-mx-xs"
               :icon="pausePlayIcon"
               @click="togglePausePlayIcon"
               size="sm"
+              :dense='false'
             >
               <q-tooltip>Pause dashboard auto-refresh</q-tooltip>
-            </q-btn>
+            </o-btn>
             <ODateTimePickerComponent
               :customRangeDialog
               @discard="customRangeDialog = false"
@@ -67,6 +67,7 @@ import {
   selectedPreset,
 } from 'src/composable/UTCZonedDateTime.ts';
 import { PresetDetails } from 'src/composable/metrics.ts';
+import OBtn from 'components/OBtn.vue';
 
 defineOptions({
   name: 'MetricsPage',

@@ -21,6 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import OButton from 'components/OBtn.vue';
+
 defineOptions({
   name: 'ErrorNotFound',
 });

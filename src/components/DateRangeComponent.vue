@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue';
+import OButton from 'components/OBtn.vue';
 
 const props = defineProps<{
   sdate: string;

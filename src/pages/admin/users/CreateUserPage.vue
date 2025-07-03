@@ -203,6 +203,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
+import OButton from 'components/OBtn.vue';
 
 defineOptions({
   preFetch() {

@@ -104,6 +104,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useQuasar } from 'quasar';
+import OButton from 'components/OBtn.vue';
 
 const $q = useQuasar();
 const title = ref('Oculus');
