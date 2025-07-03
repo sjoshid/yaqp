@@ -16,6 +16,7 @@
         />
 
         <q-select
+          global_search
           ref="search"
           dark
           dense
@@ -51,7 +52,7 @@
               <q-item-section side>
                 <q-icon name="collections_bookmark" />
               </q-item-section>
-              <q-item-section> </q-item-section>
+              <q-item-section></q-item-section>
               <q-item-section side :class="{ 'default-type': !scope.opt.type }">
                 <o-btn
                   outline
@@ -76,14 +77,17 @@
           <router-link to="/user/metrics" class="text-white">
             Performance Metrics
           </router-link>
-          <router-link to="/user" class="text-white"> Hotspot </router-link>
-          <router-link to="/user/inventory" class="text-white"> Connection Inventory </router-link>
+          <router-link to="/user" class="text-white"> Hotspot</router-link>
+          <router-link to="/user/inventory" class="text-white">
+            Connection Inventory
+          </router-link>
         </div>
 
         <q-space />
 
         <div class="q-pl-sm q-gutter-sm row items-center no-wrap">
           <q-btn
+            notifications_btn
             v-if="$q.screen.gt.xs"
             dense
             flat
@@ -91,7 +95,7 @@
             size="sm"
             icon="notifications"
           />
-          <q-btn v-if="$q.screen.gt.xs" dense flat>
+          <o-btn plus_btn v-if="$q.screen.gt.xs">
             <div class="row items-center no-wrap">
               <q-icon name="add" size="20px" />
               <q-icon
@@ -102,28 +106,23 @@
             </div>
             <q-menu auto-close>
               <q-list dense style="min-width: 100px">
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>New repository</q-item-section>
+                <q-item clickable>
+                  <q-item-section>New Company</q-item-section>
                 </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Import repository</q-item-section>
+                <q-item clickable>
+                  <q-item-section>New User</q-item-section>
                 </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>New gist</q-item-section>
+                <q-item clickable>
+                  <q-item-section>New Smart Alert</q-item-section>
                 </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>New organization</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item-label header>This repository</q-item-label>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>New issue</q-item-section>
+                <q-item clickable>
+                  <q-item-section>New Group</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
-          </q-btn>
+          </o-btn>
 
-          <o-btn dense no-wrap>
+          <o-btn profile-button dense no-wrap>
             <q-avatar rounded size="20px">
               <img src="https://cdn.quasar.dev/img/avatar3.jpg" />
             </q-avatar>
@@ -137,38 +136,20 @@
                   </q-item-section>
                 </q-item>
                 <q-separator />
-                <q-item clickable class="GL__menu-link-status">
-                  <q-item-section>
-                    <div>
-                      <q-icon name="tag_faces" color="blue-9" size="18px" />
-                      Set your status
-                    </div>
-                  </q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable class="GL__menu-link">
+                <q-item clickable>
                   <q-item-section>Your profile</q-item-section>
                 </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Your repositories</q-item-section>
-                </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Your projects</q-item-section>
-                </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Your stars</q-item-section>
-                </q-item>
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Your gists</q-item-section>
+                <q-item clickable>
+                  <q-item-section>Admin</q-item-section>
                 </q-item>
                 <q-separator />
-                <q-item clickable class="GL__menu-link">
+                <q-item clickable>
                   <q-item-section>Help</q-item-section>
                 </q-item>
                 <q-item clickable to="/user/settings">
                   <q-item-section>Settings</q-item-section>
                 </q-item>
-                <q-item clickable class="GL__menu-link">
+                <q-item clickable>
                   <q-item-section>Sign out</q-item-section>
                 </q-item>
               </q-list>
