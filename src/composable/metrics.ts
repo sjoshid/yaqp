@@ -39,9 +39,10 @@ export const useInOutMetricsBapi = async <IN, OUT>(
       params: { id: toValue(id) },
     });
     return cb(data);
-  } catch (error: never) {
-    console.log('Error status', error.response?.status);
-    throw error; // or handle error as needed
+  } catch (error: unknown) {
+    console.log('Error status', error);
+    // warn: type guard before accessing properties
+    throw error;
   }
 };
 

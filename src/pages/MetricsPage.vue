@@ -9,7 +9,17 @@
         </div>
         <div class="col-9">
           <div class="row justify-end">
-            <o-btn :dense='false' class="q-mx-xs" icon="picture_as_pdf" size="sm">
+            <q-tabs v-model="tab" dense no-caps inline-label>
+              <q-tab name="min" label="Min" :ripple="false" />
+              <q-tab name="hourly" label="Hourly" :ripple="false" />
+              <q-tab name="daily" label="Daily" :ripple="false" />
+            </q-tabs>
+            <o-btn
+              :dense="false"
+              class="q-mx-xs"
+              icon="picture_as_pdf"
+              size="sm"
+            >
               <q-tooltip>Generate dashboard as PDF</q-tooltip>
             </o-btn>
             <o-btn
@@ -17,7 +27,7 @@
               :icon="pausePlayIcon"
               @click="togglePausePlayIcon"
               size="sm"
-              :dense='false'
+              :dense="false"
             >
               <q-tooltip>Pause dashboard auto-refresh</q-tooltip>
             </o-btn>
@@ -70,6 +80,7 @@ import {
 import { PresetDetails } from 'src/composable/metrics.ts';
 import OBtn from 'components/OBtn.vue';
 
+const tab = ref('min');
 defineOptions({
   name: 'MetricsPage',
   preFetch() {
