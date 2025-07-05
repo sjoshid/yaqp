@@ -178,7 +178,7 @@ import {
   selectedPreset,
   usDateTimeFormatter,
 } from 'src/composable/UTCZonedDateTime.ts';
-import OButton from 'components/OBtn.vue';
+import { PresetDetails } from 'src/composable/metrics.ts';
 
 interface Props {
   leftRight?: boolean;
@@ -191,7 +191,7 @@ withDefaults(defineProps<Props>(), {
   dialogTitle: 'Set Custom Range',
 });
 
-const emit = defineEmits<{
+defineEmits<{
   (event: 'discard'): void;
   (event: 'update:preset', preset: Preset): void;
 }>();
@@ -216,7 +216,18 @@ const calculatePreset = () => {
     },
     fluid: false,
   };
-  selectedPreset.value = preset;
+  selectedPreset.value = {
+    label: 'Custom',
+    value: 'custom',
+    period: (): PresetDetails => {
+      return {
+        startDateTime: startDateTime.value,
+        endDateTime: endDateTime.value,
+        available: [],
+      };
+    },
+    fluid: false,
+  };
 };
 
 const startDateLimit = (date: string): boolean => {

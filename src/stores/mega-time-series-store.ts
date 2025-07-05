@@ -39,39 +39,63 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       series: [],
     },
   };
-  const routerUptime: TSDetails = {
+  const routerUptime: TSDetails<string, string> = {
     url: '',
     options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
   };
-  const routerSaturation: TSDetails = {
+  const routerSaturation: TSDetails<string, string> = {
     url: '',
     options: {},
-  };
-
-  const routerGaugeCurrentUptime: TSDetails = {
-    url: '',
-    options: {},
-  };
-  const routerMemUsed: TSDetails = {
-    url: '',
-    options: {},
-  };
-  const routerGaugeCurrentSat: TSDetails = {
-    url: '',
-    options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
   };
 
-  const routerCPULoad: TSDetails = {
+  const routerGaugeCurrentUptime: TSDetails<string, string> = {
     url: '',
     options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
   };
-  const routerMemUtil: TSDetails = {
+  const routerMemUsed: TSDetails<string, string> = {
     url: '',
     options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
   };
-  const routerGaugeCurrentMemUtil: TSDetails = {
+  const routerGaugeCurrentSat: TSDetails<string, string> = {
     url: '',
     options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
+  };
+
+  const routerCPULoad: TSDetails<string, string> = {
+    url: '',
+    options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
+  };
+  const routerMemUtil: TSDetails<string, string> = {
+    url: '',
+    options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
+  };
+  const routerGaugeCurrentMemUtil: TSDetails<string, string> = {
+    url: '',
+    options: {},
+    cb: (input: string): string => {
+      return input.concat('hello');
+    }
   };
 
   const megaDict = ref({

@@ -34,9 +34,10 @@
               filled
               :label="props.label"
               @update:model-value="
-                (nv) => {
-                  if (nv.value !== 'custom') {
-                    selectedPreset = nv;
+                (nv: string) => {
+                  if (nv !== 'custom') {
+                    // sj_todo handle this
+                    //selectedPreset = nv;
                   } else {
                     customRangeDialog = true;
                   }
@@ -140,19 +141,7 @@ const gridOptions = [
     value: chLayout,
   },
 ];
-
-const changeTimeRange = (sd: string, ed: string) => {
-  startDate.value = sd;
-  endDate.value = ed;
-};
-
-const changeId = () => {
-  activeLayout.value = routerLayout;
-  activeId.value = inputId.value;
-};
 const activeId = ref('');
-const inputId = ref('');
-
 const customRangeDialog = ref(false);
 const isPaused = ref(false);
 const pausePlayIcon = ref('pause');

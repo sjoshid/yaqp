@@ -29,29 +29,20 @@ export interface TSDetails<IN, OUT> {
   cb: ResponseProcessor<IN, OUT>;
 }
 
-export const useInOutMetricsBapi = <IN, OUT>(
+export const useInOutMetricsBapi = async <IN, OUT>(
   url: string,
   id: string | ToRef<string>,
   cb: ResponseProcessor<IN, OUT>,
-  options?: {
-    loading: Ref<boolean>;
-  },
-): OUT => {
-  if (typeof options !== 'undefined') {
-    options.loading.value = true;
-  }
-  bapi
-    .get<IN>(url, {
+): Promise<OUT> => {
+  try {
+    const { data } = await bapi.get<IN>(url, {
       params: { id: toValue(id) },
-    })
-    .then(({ data }) => {
-      // if here, then it is guaranteed response was OK (200s). No need to check for status.
-      //options?.loading.value = false;
-      return cb(data);
-    })
-    .catch(({ response }) => {
-      console.log('Error status', response.status);
     });
+    return cb(data);
+  } catch (error: never) {
+    console.log('Error status', error.response?.status);
+    throw error; // or handle error as needed
+  }
 };
 
 export enum Granularity {
