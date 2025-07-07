@@ -1,19 +1,14 @@
 <template>
-  <v-chart :option="chartOptions" class="chart" />
+
+  <q-skeleton v-if="isLoading" type="rect" width="100%" height="100%"/>
+  <!-- warn: autoresize is a very important props. Remove it and see what I mean. -->
+  <v-chart v-else autoresize :option="chartOptions" class="chart" />
 </template>
 
 <script lang="ts" setup>
 import { useMegaTimeSeriesStore } from '../stores/mega-time-series-store';
 import { use } from 'echarts';
-import type { LineSeriesOption } from 'echarts/charts';
 import { LineChart } from 'echarts/charts';
-import type {
-  GridComponentOption,
-  LegendComponentOption,
-  TitleComponentOption,
-  ToolboxComponentOption,
-  TooltipComponentOption,
-} from 'echarts/components';
 import {
   GridComponent,
   LegendComponent,
@@ -22,18 +17,15 @@ import {
   TooltipComponent,
 } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import type { ComposeOption } from 'echarts/core';
 import VChart from 'vue-echarts';
-import { storeToRefs } from 'pinia';
-import { onBeforeUpdate, onMounted, onUpdated, ref, useTemplateRef } from 'vue';
-import { TSDetails, useInOutMetricsBapi } from 'src/composable/metrics.ts';
+import { ref, onBeforeUpdate, onBeforeMount } from 'vue';
+import { TSDetails } from 'src/composable/metrics.ts';
 
 const props = defineProps<{
   id: string;
   idFromMegaDict: string;
   startDate: string;
   endDate: string;
-  dummy: string;
 }>();
 
 use([
@@ -46,31 +38,30 @@ use([
   CanvasRenderer,
 ]);
 const megaTimeSeries = useMegaTimeSeriesStore();
-const { megaDict } = storeToRefs(megaTimeSeries);
-const isLoading = ref(false);
+const ss = megaTimeSeries.megaDict;
+const isLoading = ref(true);
 
-const details: TSDetails = megaDict.value[props.idFromMegaDict];
-const chartOptions = ref(details.options);
+const details: TSDetails = ss[props.idFromMegaDict];
+let chartOptions = details.options;
 //const url = details.url;
 //const responseProcessor = details.cb;
 //const eChartInstance = useTemplateRef('oChart');
 
-/*onMounted(() => {
-  console.log('TS Chart onMounted with id', props.id);
-  const response = useInOutMetricsBapi(url, props.id, responseProcessor);
-  chartOptions.series = response;
+onBeforeMount(() => {
+  isLoading.value = true;
+  //console.log('TS Chart onBeforeMount with id', props.id);
+  setTimeout(() => {
+    chartOptions.series = ref([{
+      name: 'Sales',
+      type: 'line',
+      data: [150, 230, 224, 218, 135, 147, 260],
+    }]);
+    isLoading.value = false;
+  }, 2000);
 });
 
-onUpdated(() => {
-  eChartInstance.value.chart.showLoading();
-  console.log('TS Chart onUpdated with id', props.id);
-  const response = useInOutMetricsBapi(url, props.id, responseProcessor);
-  eChartInstance.value.chart.hideLoading();
-  chartOptions.series = response;
-});
-
+// This is called only when reactive data changes. Not on first mount.
 onBeforeUpdate(() => {
-  console.log('TS Chart onBeforeUpdate with id', props.id);
-  useInOutMetricsBapi(url, props.id, responseProcessor);
-});*/
+  console.log('onBeforeUpdate called')
+});
 </script>

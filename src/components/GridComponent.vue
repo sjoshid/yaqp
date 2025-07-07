@@ -19,13 +19,7 @@
         @resize="handleResize"
       >
         <div style="vertical-align: center; width: 100%; height: 100%">
-          <OTSChartComponent
-            :id
-            :startDate
-            :endDate
-            :idFromMegaDict="item.i"
-            :dummy="dummy"
-          />
+          <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" />
         </div>
       </grid-item>
     </grid-layout>
@@ -51,11 +45,9 @@ const props = defineProps<{
 }>();
 
 const refLayout = toRef(props.layout);
-const dummy = ref('blah');
 
 const handleResize = () => {
   console.log('resized');
-  dummy.value = '';
 };
 </script>
 

@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { InOutResponse, TSDetails } from 'src/composable/metrics.ts';
 
 export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
-  const routerInOut: TSDetails<InOutResponse[], InOutResponse[]> = {
+  const routerInOut: TSDetails<InOutResponse[], InOutResponse[]> = ref({
     url: '/metrics/inout',
     cb: (res) => {
       console.log(typeof res);
@@ -37,74 +37,70 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       // sj_todo Why dont we just return the entire series array from API call?
       // So we dont have to "join"
       series: [
-        {
-          name: 'Sales',
-          type: 'line',
-          data: [150, 230, 224, 218, 135, 147, 260],
-        },
+
       ],
     },
-  };
-  const routerUptime: TSDetails<string, string> = {
+  });
+  const routerUptime: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
-  const routerSaturation: TSDetails<string, string> = {
+  });
+  const routerSaturation: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
+  });
 
-  const routerGaugeCurrentUptime: TSDetails<string, string> = {
+  const routerGaugeCurrentUptime: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
-  const routerMemUsed: TSDetails<string, string> = {
+  });
+  const routerMemUsed: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
-  const routerGaugeCurrentSat: TSDetails<string, string> = {
+  });
+  const routerGaugeCurrentSat: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
+  });
 
-  const routerCPULoad: TSDetails<string, string> = {
+  const routerCPULoad: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
-  const routerMemUtil: TSDetails<string, string> = {
+  });
+  const routerMemUtil: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
-  const routerGaugeCurrentMemUtil: TSDetails<string, string> = {
+  });
+  const routerGaugeCurrentMemUtil: TSDetails<string, string> = ref({
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
     },
-  };
+  });
 
-  const megaDict = ref({
+  const megaDict = {
     routerInOut,
     routerUptime,
     routerSaturation,
@@ -114,6 +110,6 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
     routerCPULoad,
     routerMemUtil,
     routerGaugeCurrentMemUtil,
-  });
+  };
   return { megaDict };
 });
