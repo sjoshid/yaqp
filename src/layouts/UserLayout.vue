@@ -122,7 +122,7 @@
             </q-menu>
           </o-btn>
 
-          <o-btn profile-button dense no-wrap>
+          <o-btn profile-button>
             <q-avatar rounded size="20px">
               <img src="https://cdn.quasar.dev/img/avatar3.jpg" />
             </q-avatar>

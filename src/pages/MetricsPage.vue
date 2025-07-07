@@ -42,7 +42,7 @@
               :options="availablePresets"
               dense
               filled
-              :label="props.label"
+              label="Presets"
               @update:model-value="
                 (nv: string) => {
                   if (nv !== 'custom') {
@@ -58,11 +58,10 @@
         </div>
       </div>
       <GridComponent
-        v-if="activeLayout.length > 0"
         :id="activeId"
         :startDate
         :endDate
-        :layout="activeLayout"
+        :layout="getLayoutForType(metricType)"
       />
     </div>
   </q-page>
@@ -81,6 +80,7 @@ import { PresetDetails } from 'src/composable/metrics.ts';
 import OBtn from 'components/OBtn.vue';
 
 const tab = ref('min');
+const layout = ref('device');
 defineOptions({
   name: 'MetricsPage',
   preFetch() {
@@ -90,29 +90,31 @@ defineOptions({
 
 const props = withDefaults(
   defineProps<{
-    label?: string;
     showCustomPreset?: boolean;
+    metricType: string, // type of metric to be displayed.
+    activeId: string, // this is id of the "thing" to get metrics for.
   }>(),
   {
-    label: 'Presets',
     showCustomPreset: true,
+    metricType: 'device',
+    activeId: 'RandomId',
   },
 );
 
 const startDate = ref('2024-09-04 10:00');
 const endDate = ref('2024-09-04 10:00');
 
-const routerLayout = [
+const deviceLayout = [
   { x: 0, y: 0, w: 12, h: 5, i: 'routerInOut' },
 
-  /*{ x: 0, y: 5, w: 5, h: 5, i: 'routerUptime' },
-  { x: 5, y: 5, w: 5, h: 5, i: 'routerSaturation' },
-  { x: 10, y: 5, w: 2, h: 5, i: 'routerGaugeCurrentUptime' },
+  { x: 0, y: 1, w: 5, h: 5, i: 'routerUptime' },
+  { x: 5, y: 1, w: 5, h: 5, i: 'routerSaturation' },
+  { x: 10, y: 1, w: 2, h: 5, i: 'routerGaugeCurrentUptime' },
 
-  { x: 0, y: 15, w: 10, h: 5, i: 'routerMemUsed' },
-  { x: 10, y: 15, w: 2, h: 5, i: 'routerMemUsed' },
+  { x: 0, y: 2, w: 10, h: 5, i: 'routerMemUsed' },
+  { x: 10, y: 2, w: 2, h: 5, i: 'routerGaugeCurrentSat' },
 
-  { x: 0, y: 20, w: 5, h: 5, i: 'routerCPULoad' },
+  /*{ x: 0, y: 20, w: 5, h: 5, i: 'routerCPULoad' },
   { x: 5, y: 20, w: 5, h: 5, i: 'routerCPULoad' },
   { x: 10, y: 20, w: 2, h: 5, i: 'routerGaugeCurrentMemUtil' },*/
 ];
@@ -132,12 +134,11 @@ const chLayout = [
   { x: 10, y: 7, w: 2, h: 7, i: '3' },
 ];
 
-const activeLayout = ref([]);
-const intfLayout = [...routerLayout];
+const intfLayout = [...deviceLayout];
 const gridOptions = [
   {
     label: 'Router Grid Layout',
-    value: routerLayout,
+    value: deviceLayout,
   },
   {
     label: 'BBS Grid Layout',
@@ -152,7 +153,6 @@ const gridOptions = [
     value: chLayout,
   },
 ];
-const activeId = ref('');
 const customRangeDialog = ref(false);
 const isPaused = ref(false);
 const pausePlayIcon = ref('pause');
@@ -189,4 +189,22 @@ onBeforeUnmount(() => {
     availablePresets.pop();
   }
 });
+
+const getLayoutForType = (type: string): {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  i: string;
+}[] => {
+  if (type === 'device') {
+    return deviceLayout
+  }
+  if (type === 'intf') {
+    return intfLayout
+  }
+  if (type === 'bbs') {
+    return bbsLayout
+  }
+}
 </script>

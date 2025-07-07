@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <grid-layout
-      v-bind:layout="layout"
+      v-model:layout="refLayout"
       :col-num="12"
       :row-height="60"
       is-draggable
@@ -27,8 +27,9 @@
 <script setup lang="ts">
 import { GridItem, GridLayout } from 'grid-layout-plus';
 import OTSChartComponent from 'components/OTSChartComponent.vue';
+import { toRef } from 'vue';
 
-const _props = defineProps<{
+const props = defineProps<{
   id: string; //router id, intf. id, etc.
   layout: {
     x: number;
@@ -40,6 +41,8 @@ const _props = defineProps<{
   startDate: string;
   endDate: string;
 }>();
+
+const refLayout = toRef(props.layout)
 
 const handleResize = () => {
   console.log('resized');
