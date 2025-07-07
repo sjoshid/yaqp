@@ -18,7 +18,15 @@
         :i="item.i"
         @resize="handleResize"
       >
-        <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" />
+        <div style="vertical-align: center; width: 100%; height: 100%">
+          <OTSChartComponent
+            :id
+            :startDate
+            :endDate
+            :idFromMegaDict="item.i"
+            :dummy="dummy"
+          />
+        </div>
       </grid-item>
     </grid-layout>
   </q-page>
@@ -27,7 +35,7 @@
 <script setup lang="ts">
 import { GridItem, GridLayout } from 'grid-layout-plus';
 import OTSChartComponent from 'components/OTSChartComponent.vue';
-import { toRef } from 'vue';
+import { ref, toRef } from 'vue';
 
 const props = defineProps<{
   id: string; //router id, intf. id, etc.
@@ -42,10 +50,12 @@ const props = defineProps<{
   endDate: string;
 }>();
 
-const refLayout = toRef(props.layout)
+const refLayout = toRef(props.layout);
+const dummy = ref('blah');
 
 const handleResize = () => {
   console.log('resized');
+  dummy.value = '';
 };
 </script>
 

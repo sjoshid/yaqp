@@ -20,7 +20,8 @@
       dense
       class="col-1 content-end"
       active-bg-color="accent"
-      indicator-color="accent">
+      indicator-color="accent"
+    >
       <OLinksComponent
         name="adminsettings"
         icon="admin_panel_settings"

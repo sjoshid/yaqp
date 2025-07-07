@@ -91,8 +91,8 @@ defineOptions({
 const props = withDefaults(
   defineProps<{
     showCustomPreset?: boolean;
-    metricType: string, // type of metric to be displayed.
-    activeId: string, // this is id of the "thing" to get metrics for.
+    metricType?: string; // type of metric to be displayed.
+    activeId?: string; // this is id of the "thing" to get metrics for.
   }>(),
   {
     showCustomPreset: true,
@@ -190,7 +190,9 @@ onBeforeUnmount(() => {
   }
 });
 
-const getLayoutForType = (type: string): {
+const getLayoutForType = (
+  type: string,
+): {
   x: number;
   y: number;
   w: number;
@@ -198,13 +200,13 @@ const getLayoutForType = (type: string): {
   i: string;
 }[] => {
   if (type === 'device') {
-    return deviceLayout
+    return deviceLayout;
   }
   if (type === 'intf') {
-    return intfLayout
+    return intfLayout;
   }
   if (type === 'bbs') {
-    return bbsLayout
+    return bbsLayout;
   }
-}
+};
 </script>

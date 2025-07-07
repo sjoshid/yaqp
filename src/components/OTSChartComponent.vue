@@ -1,17 +1,5 @@
 <template>
-  <q-card>
-    <q-card-section>
-      <q-skeleton v-if="isLoading" height="100%" square />
-      <v-chart
-        v-else
-        :option="chartOptions"
-        autoresize
-        class="chart"
-        ref="oChart"
-      />
-    </q-card-section>
-  </q-card>
-  <!--  <div v-else class="row justify-center">Loading...</div>-->
+  <v-chart :option="chartOptions" class="chart" />
 </template>
 
 <script lang="ts" setup>
@@ -45,6 +33,7 @@ const props = defineProps<{
   idFromMegaDict: string;
   startDate: string;
   endDate: string;
+  dummy: string;
 }>();
 
 use([
@@ -56,67 +45,17 @@ use([
   LineChart,
   CanvasRenderer,
 ]);
-
-type EChartsOption = ComposeOption<
-  | TitleComponentOption
-  | TooltipComponentOption
-  | LegendComponentOption
-  | ToolboxComponentOption
-  | GridComponentOption
-  | LineSeriesOption
->;
-
 const megaTimeSeries = useMegaTimeSeriesStore();
 const { megaDict } = storeToRefs(megaTimeSeries);
 const isLoading = ref(false);
 
 const details: TSDetails = megaDict.value[props.idFromMegaDict];
-const chartOptions = details.options;
-const url = details.url;
-const responseProcessor = details.cb;
+const chartOptions = ref(details.options);
+//const url = details.url;
+//const responseProcessor = details.cb;
+//const eChartInstance = useTemplateRef('oChart');
 
-const dummyData = ref([
-  {
-    name: 'Max In',
-    type: 'line',
-    stack: 'Total',
-    data: [
-      ['2024-03-01T12:22:33.123', 10.5],
-      ['2024-03-01T14:22:33.123', 10.5],
-      ['2024-03-01T18:22:33.123', 200.5],
-    ],
-  },
-  {
-    name: 'Max Out',
-    type: 'line',
-    stack: 'Total',
-    data: [
-      ['2024-03-01T12:22:33.123', 10.5],
-      ['2024-03-01T18:22:33.123', 50.5],
-    ],
-  },
-  {
-    name: 'Avg In',
-    type: 'line',
-    stack: 'Total',
-    data: [
-      ['2024-03-01T12:22:33.123', 10.5],
-      ['2024-03-01T18:22:33.123', 50.5],
-    ],
-  },
-  {
-    name: 'Avg Out',
-    type: 'line',
-    stack: 'Total',
-    data: [
-      ['2024-03-01T12:22:33.123', 10.5],
-      ['2024-03-01T18:22:33.123', 50.5],
-    ],
-  },
-]);
-const eChartInstance = useTemplateRef('oChart');
-
-onMounted(() => {
+/*onMounted(() => {
   console.log('TS Chart onMounted with id', props.id);
   const response = useInOutMetricsBapi(url, props.id, responseProcessor);
   chartOptions.series = response;
@@ -133,5 +72,5 @@ onUpdated(() => {
 onBeforeUpdate(() => {
   console.log('TS Chart onBeforeUpdate with id', props.id);
   useInOutMetricsBapi(url, props.id, responseProcessor);
-});
+});*/
 </script>

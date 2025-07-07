@@ -36,7 +36,13 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       },
       // sj_todo Why dont we just return the entire series array from API call?
       // So we dont have to "join"
-      series: [],
+      series: [
+        {
+          name: 'Sales',
+          type: 'line',
+          data: [150, 230, 224, 218, 135, 147, 260],
+        },
+      ],
     },
   };
   const routerUptime: TSDetails<string, string> = {
@@ -44,14 +50,14 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
   const routerSaturation: TSDetails<string, string> = {
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
 
   const routerGaugeCurrentUptime: TSDetails<string, string> = {
@@ -59,21 +65,21 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
   const routerMemUsed: TSDetails<string, string> = {
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
   const routerGaugeCurrentSat: TSDetails<string, string> = {
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
 
   const routerCPULoad: TSDetails<string, string> = {
@@ -81,21 +87,21 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
   const routerMemUtil: TSDetails<string, string> = {
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
   const routerGaugeCurrentMemUtil: TSDetails<string, string> = {
     url: '',
     options: {},
     cb: (input: string): string => {
       return input.concat('hello');
-    }
+    },
   };
 
   const megaDict = ref({
