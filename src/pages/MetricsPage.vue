@@ -3,7 +3,7 @@
     <div class="q-pa-xl column">
       <div class="row">
         <div class="col-3">
-          <div class="q-px-md text-h4 text-indigo">
+          <div class="q-px-md text-h4">
             Metrics Page for jpg-004
           </div>
         </div>

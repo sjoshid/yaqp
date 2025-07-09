@@ -4,7 +4,7 @@
       <q-toggle
         v-model="isDark"
         @click="$q.dark.toggle()"
-        label="Theme"
+        label="Dark theme"
         left-label
       />
     </q-form>
@@ -15,6 +15,7 @@
 import { useThemeStore } from 'stores/theme.ts';
 import { storeToRefs } from 'pinia';
 import { useQuasar } from 'quasar';
+import OBtn from '../components/OBtn.vue';
 
 const theme = useThemeStore();
 const { isDark } = storeToRefs(theme);

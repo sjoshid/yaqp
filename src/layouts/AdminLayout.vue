@@ -1,14 +1,12 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <OHeaderComponent />
-    <ODrawerComponent />
 
     <q-page-container class="q-ma-lg">
       <q-tabs
         v-model="panel"
         dense
         class="text-grey"
-        active-bg-color="accent"
         indicator-color="primary"
         align="justify"
         narrow-indicator

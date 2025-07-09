@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
-import { InOutResponse, TSDetails } from 'src/composable/metrics.ts';
+import { InOutResponse, TSDetails } from '../composable/metrics';
 
 export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
   const routerInOut: TSDetails<InOutResponse[], InOutResponse[]> = ref({
@@ -36,9 +36,7 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       },
       // sj_todo Why dont we just return the entire series array from API call?
       // So we dont have to "join"
-      series: [
-
-      ],
+      series: [],
     },
   });
   const routerUptime: TSDetails<string, string> = ref({

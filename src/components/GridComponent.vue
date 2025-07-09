@@ -52,11 +52,6 @@ const handleResize = () => {
 </script>
 
 <style scoped lang="sass">
-.vgl-layout
-  background-color: var(--o-dashboard-bg-color)
-
-.vgl-item
-  background-color: #886464
 
 .sharp-shadow
   box-shadow: var(--o-grid-shadow)
