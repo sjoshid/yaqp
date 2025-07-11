@@ -40,8 +40,8 @@ const props = defineProps<{
     h: number;
     i: string;
   }[];
-  startDate: string;
-  endDate: string;
+  startDate: ZonedDateTime;
+  endDate: ZonedDateTime;
 }>();
 
 const refLayout = toRef(props.layout);

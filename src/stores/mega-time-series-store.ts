@@ -13,10 +13,9 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       tooltip: {
         trigger: 'axis',
       },
-      // Legend array will be series[0].name
-      /*legend: {
-        data: ['Max In', 'Max Out', 'Avg In', 'Avg Out'],
-      },*/
+      legend: {
+        type: 'scroll',
+      },
       grid: {
         left: '3%',
         right: '4%',
@@ -31,9 +30,10 @@ export const useMegaTimeSeriesStore = defineStore('chartsStore', () => {
       xAxis: {
         type: 'time',
       },
-      yAxis: {
-        type: 'value',
-      },
+      yAxis: [
+        { type: 'value', name: 'Max' },    // yAxis[0]
+        { type: 'value', name: 'Avg' }    // yAxis[1]
+      ],
       // sj_todo Why dont we just return the entire series array from API call?
       // So we dont have to "join"
       series: [],

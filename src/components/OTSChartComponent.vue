@@ -4,11 +4,16 @@
     <p>Errored</p>
   </div>
   <!-- warn: autoresize is a very important props. Remove it and see what I mean. -->
-  <v-chart v-else-if="isSuccess" theme="vintage" autoresize :option="chartOptions" class="chart" />
+  <v-chart
+    v-else-if="isSuccess"
+    theme="vintage"
+    autoresize
+    :option="chartOptions"
+    class="chart"
+  />
   <div v-else class="row justify-center">
     <p>Unknonw error</p>
   </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -17,12 +22,13 @@ import VChart from 'vue-echarts';
 import { onBeforeMount, onBeforeUpdate, ref, toRef } from 'vue';
 import { TSDetails } from 'src/composable/metrics.ts';
 import { useAxios } from '../composable/useAxios';
+import { ZonedDateTime } from '@js-joda/core';
 
 const props = defineProps<{
   id: string;
   idFromMegaDict: string;
-  startDate: string;
-  endDate: string;
+  startDate: ZonedDateTime;
+  endDate: ZonedDateTime;
 }>();
 
 const megaTimeSeries = useMegaTimeSeriesStore();
@@ -39,8 +45,10 @@ let chartOptions = details.options;
 
 onBeforeMount(() => {
   //console.log('TS Chart onBeforeMount with id', props.id);
-  const { data, loading, error, success, fetchData } = useAxios<[[ts: string, value: number]]>();
-  isLoading = toRef(loading)
+  const { data, loading, error, success, fetchData } = useAxios<{
+    name: [[ts: string, value: number]];
+  }>();
+  isLoading = toRef(loading);
   isError = toRef(error);
   isSuccess = toRef(success);
   let response = toRef(data);
@@ -48,21 +56,24 @@ onBeforeMount(() => {
   fetchData(`/kbps/${props.id}`, {
     auth: {
       username: 'sj_baml_api_user',
-      password: 'Welcome99'
-    }
-  })
-  chartOptions.series = [
-    {
-      type: 'line',
-      name: 'Max Kbps',
-      data: response
+      password: 'Welcome99',
     },
-    {
-      type: 'line',
-      name: 'Avg Kbps',
-      data: response
-    },
-  ];
+  }).then(() => {
+    chartOptions.series = [
+      {
+        type: 'line',
+        name: 'Max Kbps',
+        data: response.value.max,
+        yAxisIndex: 0,
+      },
+      {
+        type: 'line',
+        name: 'Avg Kbps',
+        data: response.value.avg,
+        yAxisIndex: 1,
+      },
+    ];
+  });
 });
 
 // This is called only when reactive data changes. Not on first mount.
