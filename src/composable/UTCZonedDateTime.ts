@@ -59,7 +59,7 @@ export const availablePresets: Preset[] = [
     value: 'l7d',
     period: (): PresetDetails => {
       const endDateTime = nowUTC();
-      const startDateTime = endDateTime.minusHours(24);
+      const startDateTime = endDateTime.minusDays(7);
       return {
         startDateTime,
         endDateTime,

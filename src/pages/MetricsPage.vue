@@ -2,12 +2,15 @@
   <q-page padding>
     <div class="q-pa-xl column">
       <div class="row">
-        <div class="col-3">
-          <div class="q-px-md text-h4">
-            Metrics Page for jpg-004
+        <div class="col-5">
+          <div class="q-px-md text-h5">
+            Metrics Page for {{ props.activeId }}
+          </div>
+          <div class="q-px-md">
+            {{ computedDates.startDate }} - {{ computedDates.endDate }}
           </div>
         </div>
-        <div class="col-9">
+        <div class="col-7">
           <div class="row justify-end">
             <q-tabs v-model="tab" dense no-caps inline-label>
               <q-tab name="min" label="Min" :ripple="false" />
@@ -38,29 +41,20 @@
             <q-select
               class="q-ml-md col-2"
               style="max-width: 150px"
-              :model-value="selectedPreset.label"
+              v-model="selectedPreset"
               :options="availablePresets"
               dense
               filled
               label="Presets"
-              @update:model-value="
-                (nv: string) => {
-                  if (nv !== 'custom') {
-                    // sj_todo handle this
-                    //selectedPreset = nv;
-                  } else {
-                    customRangeDialog = true;
-                  }
-                }
-              "
+              :display-value="selectedPreset.label"
             />
           </div>
         </div>
       </div>
       <GridComponent
         :id="activeId"
-        :startDate
-        :endDate
+        :startDate="computedDates.startDate"
+        :endDate="computedDates.endDate"
         :layout="getLayoutForType(metricType)"
       />
     </div>
@@ -68,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount, ref } from 'vue';
+import { computed, onBeforeMount, onBeforeUnmount, ref } from 'vue';
 import GridComponent from 'components/GridComponent.vue';
 import ODateTimePickerComponent from 'components/ODateTimePickerComponent.vue';
 import {
@@ -81,6 +75,7 @@ import OBtn from 'components/OBtn.vue';
 
 const tab = ref('min');
 const layout = ref('device');
+
 defineOptions({
   name: 'MetricsPage',
   preFetch() {
@@ -101,8 +96,13 @@ const props = withDefaults(
   },
 );
 
-const startDate = ref('2024-09-04 10:00');
-const endDate = ref('2024-09-04 10:00');
+const computedDates = computed(() => {
+  const curr = selectedPreset.value.period();
+  return {
+    startDate: curr.startDateTime,
+    endDate: curr.endDateTime,
+  };
+});
 
 const deviceLayout = [
   { x: 0, y: 0, w: 12, h: 5, i: 'routerInOut' },

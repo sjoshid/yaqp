@@ -18,7 +18,7 @@ axios.defaults.withCredentials = true;
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({ baseURL: 'https://api.example.com' });
-const bapi = axios.create({ baseURL: 'https://localhost:8443' });
+const bapi = axios.create({ baseURL: 'https://local.tnsi.com:9443/fsdeye-portal/api/v1' });
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
