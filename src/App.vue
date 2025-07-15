@@ -19,7 +19,7 @@ defineOptions({
     if (!session) {
       // Not in URL AND not in cookie
       console.log('Initiating auth with backend...');
-      window.location.href = 'https://localhost:8443/auth';
+      //window.location.href = 'https://localhost:8443/auth';
     } else {
       console.log('Auth not needed. ');
     }
