@@ -20,7 +20,7 @@
 import { useMegaTimeSeriesStore } from '../stores/mega-time-series-store';
 import VChart from 'vue-echarts';
 import { onBeforeMount, onBeforeUpdate, ref, toRef } from 'vue';
-import { TSDetails } from 'src/composable/metrics.ts';
+import { Granularity, TSDetails } from 'src/composable/metrics.ts';
 import { useAxios } from '../composable/useAxios';
 import { ZonedDateTime } from '@js-joda/core';
 
@@ -29,6 +29,7 @@ const props = defineProps<{
   idFromMegaDict: string;
   startDate: ZonedDateTime;
   endDate: ZonedDateTime;
+  gran: Granularity,
 }>();
 
 const megaTimeSeries = useMegaTimeSeriesStore();
@@ -78,6 +79,6 @@ onBeforeMount(() => {
 
 // This is called only when reactive data changes. Not on first mount.
 onBeforeUpdate(() => {
-  console.log('onBeforeUpdate called');
+  console.log('onBeforeUpdate called with startDate %s endDate %s and gran %s', props.startDate, props.endDate, props.gran.toString());
 });
 </script>

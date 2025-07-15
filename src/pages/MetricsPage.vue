@@ -12,10 +12,15 @@
         </div>
         <div class="col-7">
           <div class="row justify-end">
-            <q-tabs v-model="tab" dense no-caps inline-label>
-              <q-tab name="min" label="Min" :ripple="false" />
-              <q-tab name="hourly" label="Hourly" :ripple="false" />
-              <q-tab name="daily" label="Daily" :ripple="false" />
+            <q-tabs v-model="gran" dense inline-label>
+              <q-tab
+                v-for="val in Object.values(Granularity)"
+                :key="val"
+                :label="val"
+                :ripple="false"
+                :disable="!availableGranForSelectedPeriod(val)"
+                :name="val"
+              />
             </q-tabs>
             <o-btn
               :dense="false"
@@ -56,6 +61,7 @@
         :startDate="computedDates.startDate"
         :endDate="computedDates.endDate"
         :layout="getLayoutForType(metricType)"
+        :gran
       />
     </div>
   </q-page>
@@ -70,10 +76,11 @@ import {
   nowUTC,
   selectedPreset,
 } from 'src/composable/UTCZonedDateTime.ts';
-import { PresetDetails } from 'src/composable/metrics.ts';
+import { Granularity, PresetDetails } from 'src/composable/metrics.ts';
 import OBtn from 'components/OBtn.vue';
 
-const tab = ref('min');
+const gran = ref(Granularity.MINUTE);
+
 const layout = ref('device');
 
 defineOptions({
@@ -164,6 +171,13 @@ const togglePausePlayIcon = () => {
     pausePlayIcon.value = 'play_arrow';
   }
   isPaused.value = !isPaused.value;
+};
+
+const availableGranForSelectedPeriod = (key: string): boolean => {
+  if (Object.values(Granularity).includes(key)) {
+    return selectedPreset.value.available.includes(key);
+  }
+  return false;
 };
 
 onBeforeMount(() => {

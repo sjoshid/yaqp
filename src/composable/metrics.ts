@@ -47,14 +47,12 @@ export const useInOutMetricsBapi = async <IN, OUT>(
 };
 
 export enum Granularity {
-  MINUTE,
-  HOUR,
-  WEEK,
+  MINUTE = 'raw',
+  HOUR = 'hourly',
+  DAILY = 'daily',
 }
 
 export interface PresetDetails {
   startDateTime: ZonedDateTime;
   endDateTime: ZonedDateTime;
-  // sj_todo How to make available of size at least 1?
-  available: Granularity[];
 }

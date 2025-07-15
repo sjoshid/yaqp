@@ -23,6 +23,8 @@ export interface Preset {
   /** Should be <code>true</code> if <i>now</i> is constantly changing. Like last hr, last 24 hrs etc. <br>
    * Should be <code>false</code> for yesterday, last week, etc. */
   fluid: boolean;
+  // sj_todo How to make available of size at least 1?
+  available: Granularity[];
 }
 
 export const availablePresets: Preset[] = [
@@ -35,10 +37,10 @@ export const availablePresets: Preset[] = [
       return {
         startDateTime,
         endDateTime,
-        available: [Granularity.MINUTE, Granularity.HOUR],
       };
     },
     fluid: true,
+    available: [Granularity.MINUTE, Granularity.HOUR],
   },
   {
     label: 'Yesterday',
@@ -49,10 +51,10 @@ export const availablePresets: Preset[] = [
       return {
         startDateTime,
         endDateTime,
-        available: [Granularity.MINUTE, Granularity.HOUR],
       };
     },
     fluid: false,
+    available: [Granularity.MINUTE, Granularity.HOUR],
   },
   {
     label: 'Last 7 days',
@@ -63,10 +65,10 @@ export const availablePresets: Preset[] = [
       return {
         startDateTime,
         endDateTime,
-        available: [Granularity.MINUTE, Granularity.HOUR],
       };
     },
     fluid: false,
+    available: [Granularity.HOUR, Granularity.DAILY],
   },
 ];
 

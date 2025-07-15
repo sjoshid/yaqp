@@ -19,7 +19,7 @@
         @resize="handleResize"
       >
         <div style="vertical-align: center; width: 100%; height: 100%">
-          <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" />
+          <OTSChartComponent :id :startDate :endDate :idFromMegaDict="item.i" :gran/>
         </div>
       </grid-item>
     </grid-layout>
@@ -30,6 +30,7 @@
 import { GridItem, GridLayout } from 'grid-layout-plus';
 import OTSChartComponent from 'components/OTSChartComponent.vue';
 import { ref, toRef } from 'vue';
+import { Granularity } from 'app/yaqp/src/composable/metrics';
 
 const props = defineProps<{
   id: string; //router id, intf. id, etc.
@@ -42,6 +43,7 @@ const props = defineProps<{
   }[];
   startDate: ZonedDateTime;
   endDate: ZonedDateTime;
+  gran: Granularity,
 }>();
 
 const refLayout = toRef(props.layout);

@@ -78,13 +78,6 @@ export default configure((/* ctx */) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       open: false, // opens browser window automatically
-      proxy: {
-        '^/c/.*': {
-          target: 'https://dummyjson.com',
-          changeOrigin: true,
-          rewrite: path => path.replace(/^\/c/, '/c'),
-        }
-      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework

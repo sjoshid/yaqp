@@ -211,10 +211,10 @@ const calculatePreset = () => {
       return {
         startDateTime: startDateTime.value,
         endDateTime: endDateTime.value,
-        available: [],
       };
     },
     fluid: false,
+    available: [],
   };
   selectedPreset.value = {
     label: 'Custom',
@@ -223,10 +223,10 @@ const calculatePreset = () => {
       return {
         startDateTime: startDateTime.value,
         endDateTime: endDateTime.value,
-        available: [],
       };
     },
     fluid: false,
+    available: [],
   };
 };
 

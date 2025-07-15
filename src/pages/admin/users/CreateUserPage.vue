@@ -40,12 +40,6 @@
               </template>
             </q-input>
             <q-input
-              label="Phone"
-              v-model="formState.phone"
-              mask="(###) ### - ####"
-              hint="(###) ### - ####"
-            ></q-input>
-            <q-input
               label="Password"
               v-model="formState.password.value"
               type="password"
@@ -203,7 +197,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, reactive, ref } from 'vue';
-import OButton from 'components/OBtn.vue';
+import zxcvbn from 'zxcvbn';
 
 defineOptions({
   preFetch() {
@@ -248,20 +242,8 @@ function validateEmail(email: string): boolean {
 }
 
 function validatePassword(password: string): boolean {
-  // Test length
-  validPassword.length = password.length >= 12;
-  // Test capital
-  validPassword.capital = /^(?=.*[A-Z])/.test(password);
-  // Test number
-  validPassword.number = /^(?=.*[0-9])/.test(password);
-  // Test symbol
-  validPassword.symbol = /^(?=.*[!@#\$%\^&\*_\-=+])/.test(password);
-  return (
-    validPassword.length &&
-    validPassword.capital &&
-    validPassword.number &&
-    validPassword.symbol
-  );
+  const res = zxcvbn(password, ['tns','oculus']);
+  return res.score >= 3;
 }
 
 function submitForm(): void {
