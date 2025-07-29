@@ -4,60 +4,7 @@
     height-hint="61.59"
   >
     <q-toolbar class="q-py-sm q-px-md">
-      <q-select
-        global_search
-        ref="search"
-        dark
-        dense
-        standout
-        use-input
-        hide-selected
-        color="black"
-        :stack-label="false"
-        label="Search or jump to..."
-        v-model="text"
-        :options="filteredOptions"
-        @filter="filter"
-        style="width: 300px"
-      >
-        <template v-slot:append>
-          <img
-            src="https://cdn.quasar.dev/img/layout-gallery/img-github-search-key-slash.svg"
-          />
-        </template>
-
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section>
-              <div class="text-center">
-                <q-spinner-pie color="grey-5" size="24px" />
-              </div>
-            </q-item-section>
-          </q-item>
-        </template>
-
-        <template v-slot:option="scope">
-          <q-item v-bind="scope.itemProps">
-            <q-item-section side>
-              <q-icon name="collections_bookmark" />
-            </q-item-section>
-            <q-item-section></q-item-section>
-            <q-item-section side :class="{ 'default-type': !scope.opt.type }">
-              <o-btn
-                outline
-                dense
-                no-caps
-                text-color="blue-grey-5"
-                size="12px"
-                class="bg-grey-1 q-px-sm"
-              >
-                {{ scope.opt.type || 'Jump to' }}
-                <q-icon name="subdirectory_arrow_left" size="14px" />
-              </o-btn>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
+      <OSearch />
 
       <div
         v-if="$q.screen.gt.sm"
@@ -151,6 +98,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import OSearch from './OSearch.vue';
 
 const searchQuery = ref('');
 </script>
