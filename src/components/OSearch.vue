@@ -3,11 +3,27 @@ import { ref } from 'vue';
 
 const stringOptions = [
   { header: true, label: 'Users' },
-  { label: 'Sujit', value: 'sjoshi2' },
-  { label: 'Jeff', value: 'jmezger' },
-  { header: true, label: 'Devices' },
-  { label: 'jnp014', value: '0238402384-82890' },
-  { label: 'baml100', value: '987340-0927834' },
+  { label: 'Sujit', prof_url: '/sjoshi2', type: 'usr' },
+  { label: 'Jeff', prof_url: '/jmezger', type: 'usr' },
+  { header: true, label: 'Devices', type: 'usr' },
+  {
+    label: 'jnp014',
+    inv_url: '/inv/jnp014',
+    perf_url: '/perf/jnp014',
+    type: 'dev',
+  },
+  {
+    label: 'baml100',
+    inv_url: '/inv//baml100',
+    perf_url: '/perf//baml100',
+    type: 'dev',
+  },
+  {
+    label: 'baml10',
+    inv_url: '/inv/baml10',
+    perf_url: '/perf/baml10',
+    type: 'dev',
+  },
 ];
 const filterOptions = ref(null);
 const text = ref(null);
@@ -16,20 +32,15 @@ const filter = (
   inputValue: string,
   update: (callbackFn: () => void) => void,
 ) => {
+  if (inputValue.trim().length === 0 || inputValue.length < 3) {
+    return;
+  }
+
   update(() => {
-    if (inputValue.trim().length === 0) {
-      filterOptions.value = '';
-      abort();
-      return;
-    } else if (inputValue.length < 3) {
-      abort();
-      return;
-    } else {
-      const lowerTerm = inputValue.toLowerCase();
-      filterOptions.value = stringOptions.filter(
-        (item) => item.header || item.label.toLowerCase().includes(lowerTerm),
-      );
-    }
+    const lowerTerm = inputValue.toLowerCase();
+    filterOptions.value = stringOptions.filter(
+      (item) => item.header || item.label.toLowerCase().includes(lowerTerm),
+    );
   });
 };
 </script>
@@ -47,6 +58,7 @@ const filter = (
     :options="filterOptions"
     @filter="filter"
     style="width: 600px"
+    hide-dropdown-icon
   >
     <template v-slot:append>
       <img
@@ -55,7 +67,7 @@ const filter = (
     </template>
 
     <template v-slot:no-option>
-      <q-item class="bg-grey-4">
+      <q-item v-if="text.trim().length !== 0" class="bg-grey-4">
         <q-item-section>
           <div class="text-center text-grey">No results</div>
         </q-item-section>
@@ -72,6 +84,15 @@ const filter = (
       <q-item v-else v-bind="scope.itemProps">
         <q-item-section>
           <q-item-label>{{ scope.opt.label }}</q-item-label>
+        </q-item-section>
+        <q-item-section v-if="scope.opt.type == 'dev'" avatar>
+          <q-btn flat icon="inventory" :to="scope.opt.inv_url" />
+        </q-item-section>
+        <q-item-section v-if="scope.opt.type == 'dev'" avatar>
+          <q-btn flat icon="bar_chart" :to="scope.opt.perf_url" />
+        </q-item-section>
+        <q-item-section v-if="scope.opt.type == 'usr'" avatar>
+          <q-btn flat icon="contact_page" :to="scope.opt.prof_url" />
         </q-item-section>
       </q-item>
     </template>
