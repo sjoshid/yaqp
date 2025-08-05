@@ -1,32 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRef } from 'vue';
+import { useAxios } from '../composable/useAxios';
 
-const stringOptions = [
-  { header: true, label: 'Users' },
-  { label: 'Sujit', prof_url: '/sjoshi2', type: 'usr' },
-  { label: 'Jeff', prof_url: '/jmezger', type: 'usr' },
-  { header: true, label: 'Devices', type: 'usr' },
-  {
-    label: 'jnp014',
-    inv_url: '/inv/jnp014',
-    perf_url: '/perf/jnp014',
-    type: 'dev',
-  },
-  {
-    label: 'baml100',
-    inv_url: '/inv//baml100',
-    perf_url: '/perf//baml100',
-    type: 'dev',
-  },
-  {
-    label: 'baml10',
-    inv_url: '/inv/baml10',
-    perf_url: '/perf/baml10',
-    type: 'dev',
-  },
-];
 const filterOptions = ref(null);
-const text = ref(null);
+const token = ref(null);
 
 const filter = (
   inputValue: string,
@@ -35,12 +12,54 @@ const filter = (
   if (inputValue.trim().length === 0 || inputValue.length < 3) {
     return;
   }
-
   update(() => {
     const lowerTerm = inputValue.toLowerCase();
-    filterOptions.value = stringOptions.filter(
-      (item) => item.header || item.label.toLowerCase().includes(lowerTerm),
-    );
+
+    const { data, fetchData } = useAxios<{
+      name: { type: string; values: [] };
+    }>();
+    let response = toRef(data);
+
+    fetchData(`/search/${lowerTerm}`, {
+      auth: {
+        username: 'sj_baml_api_user',
+        password: 'Welcome99',
+      },
+    }).then(() => {
+      const users = [];
+      response.value.users.forEach((item) => {
+        users.push({
+          label: item,
+          prof_url: `/profile/${item}`,
+          type: 'usr',
+        });
+      });
+
+      const devices = [];
+      response.value.devices.forEach((item) => {
+        devices.push({
+          label: item,
+          inv_url: `/inv/${item}`,
+          perf_url: `/perf/${item}`,
+          type: 'dev',
+        });
+      });
+
+      const result = [];
+      result.push({ header: true, label: 'Users' });
+      // Add users section if any
+      if (users.length > 0) {
+        result.push(...users);
+      }
+
+      result.push({ header: true, label: 'Devices' });
+      // Add devices section if any
+      if (devices.length > 0) {
+        result.push(...devices);
+      }
+
+      filterOptions.value = result;
+    });
   });
 };
 </script>
@@ -54,7 +73,7 @@ const filter = (
     use-input
     :stack-label="false"
     label="Search or jump to..."
-    v-model="text"
+    v-model="token"
     :options="filterOptions"
     @filter="filter"
     style="width: 600px"
@@ -67,7 +86,7 @@ const filter = (
     </template>
 
     <template v-slot:no-option>
-      <q-item v-if="text.trim().length !== 0" class="bg-grey-4">
+      <q-item v-if="token && token.trim().length !== 0" class="bg-grey-4">
         <q-item-section>
           <div class="text-center text-grey">No results</div>
         </q-item-section>
