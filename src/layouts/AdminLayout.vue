@@ -6,34 +6,20 @@
       <q-tabs
         v-model="panel"
         dense
-        class="text-grey"
         indicator-color="primary"
-        align="justify"
+        align="left"
         narrow-indicator
       >
-        <q-route-tab name="users" label="Users" to="/admin/users" exact />
-        <q-route-tab name="company" label="Company" to="/admin/company" exact />
-        <q-route-tab name="groups" label="Groups" to="/admin/groups" exact />
-        <q-route-tab name="alerts" label="Alerts" to="/admin/alerts" exact />
+        <q-route-tab name="users" label="Users" to="/admin/users" exact :ripple="false"/>
+        <q-route-tab name="company" label="Company" to="/admin/company" exact :ripple="false"/>
+        <q-route-tab name="groups" label="Groups" to="/admin/groups" exact :ripple="false"/>
+        <q-route-tab name="alerts" label="Alerts" to="/admin/alerts" exact :ripple="false"/>
       </q-tabs>
       <div class="q-pa-xl row">
         <div class="col-11">
           <router-view />
         </div>
       </div>
-
-      <q-page-sticky position="bottom-right" :offset="[50, 50]">
-        <q-fab v-model="fab" color="secondary" icon="add" direction="up">
-          <q-fab-action
-            color="primary"
-            icon="person_add"
-            to="/admin/users/create"
-          />
-          <q-fab-action color="accent" icon="add_business" />
-          <q-fab-action color="secondary" icon="group_add" />
-          <q-fab-action color="orange" icon="add_alert" />
-        </q-fab>
-      </q-page-sticky>
     </q-page-container>
   </q-layout>
 </template>

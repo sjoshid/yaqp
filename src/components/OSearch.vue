@@ -46,16 +46,17 @@ const filter = (
       });
 
       const result = [];
-      result.push({ header: true, label: 'Users' });
-      // Add users section if any
-      if (users.length > 0) {
-        result.push(...users);
-      }
 
       result.push({ header: true, label: 'Devices' });
       // Add devices section if any
       if (devices.length > 0) {
         result.push(...devices);
+      }
+
+      result.push({ header: true, label: 'Users' });
+      // Add users section if any
+      if (users.length > 0) {
+        result.push(...users);
       }
 
       filterOptions.value = result;
