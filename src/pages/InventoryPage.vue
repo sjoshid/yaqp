@@ -20,13 +20,13 @@
           <div class="row full-width">
             <div class="col-3 text-h5 text-primary">BBS/LVC</div>
             <div class="col-9 row justify-end q-gutter-x-md">
-              <q-btn icon="bar_chart" ripple="false" disabled="true">
+              <q-btn icon="bar_chart" :ripple="false">
                 <q-tooltip>Show metrics</q-tooltip>
               </q-btn>
-              <q-btn icon="dataset_linked" ripple="false" disabled="true">
+              <q-btn icon="dataset_linked" :ripple="false">
                 <q-tooltip>Show related</q-tooltip>
               </q-btn>
-              <q-btn icon="file_download" ripple="false" disabled="true">
+              <q-btn icon="file_download" :ripple="false">
                 <q-tooltip>Download data</q-tooltip>
               </q-btn>
               <q-select
@@ -119,7 +119,12 @@ const deviceHeaders = ref([
   },
   { name: 'label', label: 'Label', field: (row) => row.label, sortable: false },
   { name: 'acna', label: 'ACNA', field: (row) => row.acna, sortable: false },
-  { name: 'sb', label: 'Sponsored by', field: (row) => row.sb, sortable: false },
+  {
+    name: 'sb',
+    label: 'Sponsored by',
+    field: (row) => row.sb,
+    sortable: false,
+  },
 ]);
 
 const devicesDummyData = ref([
